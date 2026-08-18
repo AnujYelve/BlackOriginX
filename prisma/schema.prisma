@@ -1,0 +1,298 @@
+// ============================================
+// BlackOriginX CMS — PostgreSQL Schema
+// ============================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// Enums
+// ============================================
+
+enum AdminRole {
+  SUPER_ADMIN
+  ADMIN
+  EDITOR
+}
+
+enum BlogStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum MeetingStatus {
+  PENDING
+  SCHEDULED
+  COMPLETED
+  REJECTED
+}
+
+// ============================================
+// Admin
+// ============================================
+
+model Admin {
+  id          String    @id @default(cuid())
+  email       String    @unique
+  password    String
+  name        String
+  role        AdminRole @default(ADMIN)
+  avatarUrl   String?
+  lastLoginAt DateTime?
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  auditLogs AuditLog[]
+  media     Media[]
+
+  @@index([email])
+}
+
+// ============================================
+// Site Settings (single-row design)
+// ============================================
+
+model SiteSettings {
+  id String @id @default(cuid())
+
+  // Company
+  companyName        String @default("BlackOriginX")
+  tagline            String @default("Redefining the Future of Mobility")
+  companyDescription String?
+  logoUrl            String @default("/logo.jpg.jpeg")
+  faviconUrl         String?
+  websiteUrl         String?
+
+  // Contact
+  primaryEmail     String?
+  supportEmail     String?
+  phoneNumber      String?
+  address          String?
+  googleMapsEmbedUrl String?
+
+  // Social
+  linkedinUrl  String?
+  instagramUrl String?
+  twitterUrl   String?
+  facebookUrl  String?
+  youtubeUrl   String?
+
+  // Footer
+  footerCopyright   String?
+  footerDescription String?
+
+  // SEO Defaults
+  seoDefaultTitle       String?
+  seoDefaultDescription String?
+  seoDefaultKeywords    String?
+  openGraphImage        String?
+
+  // Analytics (future-ready)
+  googleAnalyticsId  String?
+  googleTagManagerId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ============================================
+// CMS Page Sections (Homepage + future pages)
+// ============================================
+
+model CmsPage {
+  id         String  @id @default(cuid())
+  pageSlug   String
+  sectionKey String
+  content    Json
+  sortOrder  Int     @default(0)
+  isActive   Boolean @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([pageSlug, sectionKey])
+  @@index([pageSlug])
+}
+
+// ============================================
+// Page SEO
+// ============================================
+
+model PageSeo {
+  id              String  @id @default(cuid())
+  pageSlug        String  @unique
+  seoTitle        String?
+  metaDescription String?
+  keywords        String?
+  openGraphImage  String?
+  canonicalUrl    String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+// ============================================
+// Blog System
+// ============================================
+
+model Blog {
+  id               String     @id @default(cuid())
+  title            String
+  slug             String     @unique
+  shortDescription String?
+  content          String
+  coverImageUrl    String?
+  author           String
+  categoryId       String?
+  seoTitle         String?
+  seoDescription   String?
+  status           BlogStatus @default(DRAFT)
+  isFeatured       Boolean    @default(false)
+  publishedAt      DateTime?
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+
+  category Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  tags     BlogTag[]
+
+  @@index([slug])
+  @@index([status])
+  @@index([categoryId])
+  @@index([publishedAt])
+}
+
+model Category {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  slug        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  blogs Blog[]
+
+  @@index([slug])
+}
+
+model Tag {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  slug      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  blogs BlogTag[]
+
+  @@index([slug])
+}
+
+model BlogTag {
+  blogId String
+  tagId  String
+
+  blog Blog @relation(fields: [blogId], references: [id], onDelete: Cascade)
+  tag  Tag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([blogId, tagId])
+}
+
+// ============================================
+// Contact Messages
+// ============================================
+
+model ContactMessage {
+  id          String    @id @default(cuid())
+  name        String
+  email       String
+  inquiryType String
+  subject     String?
+  message     String
+  isRead      Boolean   @default(false)
+  isArchived  Boolean   @default(false)
+  isDeleted   Boolean   @default(false)
+  deletedAt   DateTime?
+  ip          String?
+  userAgent   String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([isRead])
+  @@index([isDeleted])
+  @@index([createdAt])
+}
+
+// ============================================
+// Investor Meetings
+// ============================================
+
+model InvestorMeeting {
+  id             String        @id @default(cuid())
+  name           String
+  company        String?
+  email          String
+  phone          String?
+  country        String?
+  investmentType String?
+  investmentSize String?
+  message        String?
+  preferredDate  String?
+  preferredTime  String?
+  status         MeetingStatus @default(PENDING)
+  isContacted    Boolean       @default(false)
+  isArchived     Boolean       @default(false)
+  isDeleted      Boolean       @default(false)
+  deletedAt      DateTime?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@index([status])
+  @@index([isDeleted])
+  @@index([createdAt])
+}
+
+// ============================================
+// Media Library
+// ============================================
+
+model Media {
+  id           String   @id @default(cuid())
+  filename     String
+  url          String
+  altText      String?
+  mimeType     String?
+  sizeBytes    Int?
+  uploadedById String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  uploadedBy Admin? @relation(fields: [uploadedById], references: [id], onDelete: SetNull)
+
+  @@index([createdAt])
+}
+
+// ============================================
+// Audit Log (append-only)
+// ============================================
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  adminId    String?
+  adminEmail String?
+  action     String
+  entity     String?
+  entityId   String?
+  metadata   Json?
+  ip         String?
+  createdAt  DateTime @default(now())
+
+  admin Admin? @relation(fields: [adminId], references: [id], onDelete: SetNull)
+
+  @@index([adminId])
+  @@index([action])
+  @@index([createdAt])
+}
