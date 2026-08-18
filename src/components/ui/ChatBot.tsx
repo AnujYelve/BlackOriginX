@@ -13,7 +13,8 @@ import {
   Copy,
   Check,
   ChevronDown,
-  ArrowRight
+  ArrowRight,
+  Sparkles
 } from "lucide-react";
 import Link from "next/link";
 
@@ -346,25 +347,59 @@ export function ChatBot() {
         )}
       </AnimatePresence>
 
-      {/* Floating Action Trigger Button */}
+      {/* Floating Action Button with Smooth Bobbing Motion */}
       <motion.button
-        whileHover={{ scale: 1.08 }}
-        whileTap={{ scale: 0.95 }}
+        animate={
+          isOpen
+            ? { y: 0, rotate: 0 }
+            : {
+                y: [0, -8, 0],
+                rotate: [0, -2, 2, 0],
+              }
+        }
+        transition={
+          isOpen
+            ? { duration: 0.2 }
+            : {
+                y: { repeat: Infinity, duration: 3, ease: "easeInOut" },
+                rotate: { repeat: Infinity, duration: 4, ease: "easeInOut" },
+              }
+        }
+        whileHover={{ scale: 1.1, y: -2 }}
+        whileTap={{ scale: 0.92 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="pointer-events-auto relative group w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#b87333] to-[#e5a93c] p-[2px] shadow-[0_10px_30px_rgba(184,115,51,0.4)] transition-all duration-300"
+        className="pointer-events-auto relative group w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#b87333] to-[#e5a93c] p-[2px] shadow-[0_10px_30px_rgba(184,115,51,0.45)] transition-all duration-300"
       >
-        <div className="w-full h-full bg-[#18181b] group-hover:bg-[#141416] rounded-[14px] flex items-center justify-center text-[#e5a93c] group-hover:text-white transition-colors">
-          {isOpen ? <X size={24} /> : <MessageSquare size={24} />}
-        </div>
-
-        {/* Pulse Glow Effect when closed */}
+        {/* Radar Pulse Expanding Wave Ring */}
         {!isOpen && (
-          <span className="absolute -inset-1 rounded-2xl bg-gradient-to-tr from-[#b87333] to-[#e5a93c] opacity-40 blur-md animate-pulse pointer-events-none group-hover:opacity-75 transition-opacity" />
+          <motion.span
+            animate={{ scale: [1, 1.45], opacity: [0.55, 0] }}
+            transition={{ repeat: Infinity, duration: 2.2, ease: "easeOut" }}
+            className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-[#b87333] to-[#e5a93c] pointer-events-none"
+          />
         )}
 
-        {/* Unread Badge */}
+        <div className="w-full h-full bg-[#18181b] group-hover:bg-[#141416] rounded-[14px] flex items-center justify-center text-[#e5a93c] group-hover:text-white transition-colors relative z-10">
+          {isOpen ? (
+            <X size={24} />
+          ) : (
+            <motion.div
+              animate={{ rotate: [0, -14, 14, -8, 8, 0] }}
+              transition={{ repeat: Infinity, repeatDelay: 3.5, duration: 1.2 }}
+            >
+              <MessageSquare size={24} />
+            </motion.div>
+          )}
+        </div>
+
+        {/* Ambient Glow behind button */}
+        {!isOpen && (
+          <span className="absolute -inset-1 rounded-2xl bg-gradient-to-tr from-[#b87333] to-[#e5a93c] opacity-40 blur-md animate-pulse pointer-events-none group-hover:opacity-80 transition-opacity" />
+        )}
+
+        {/* Unread Counter Badge */}
         {!isOpen && unreadCount > 0 && (
-          <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-red-500 text-white font-bold text-[10px] flex items-center justify-center border-2 border-[#18181b] shadow-md animate-bounce">
+          <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-red-500 text-white font-bold text-[10px] flex items-center justify-center border-2 border-[#18181b] shadow-md animate-bounce z-20">
             {unreadCount}
           </span>
         )}
