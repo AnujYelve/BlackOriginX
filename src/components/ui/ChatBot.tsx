@@ -347,34 +347,32 @@ export function ChatBot() {
         )}
       </AnimatePresence>
 
-      {/* Floating Action Button with Smooth Bobbing Motion */}
+      {/* Floating Action Button with Ultra-Smooth Bobbing Motion */}
       <motion.button
         animate={
           isOpen
-            ? { y: 0, rotate: 0 }
+            ? { y: 0 }
             : {
-                y: [0, -8, 0],
-                rotate: [0, -2, 2, 0],
+                y: [0, -5, 0],
               }
         }
         transition={
           isOpen
             ? { duration: 0.2 }
             : {
-                y: { repeat: Infinity, duration: 3, ease: "easeInOut" },
-                rotate: { repeat: Infinity, duration: 4, ease: "easeInOut" },
+                y: { repeat: Infinity, duration: 4.5, ease: "easeInOut" },
               }
         }
-        whileHover={{ scale: 1.1, y: -2 }}
-        whileTap={{ scale: 0.92 }}
+        whileHover={{ scale: 1.08, y: -2 }}
+        whileTap={{ scale: 0.94 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="pointer-events-auto relative group w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#b87333] to-[#e5a93c] p-[2px] shadow-[0_10px_30px_rgba(184,115,51,0.45)] transition-all duration-300"
+        className="pointer-events-auto relative group w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#b87333] to-[#e5a93c] p-[2px] shadow-[0_8px_25px_rgba(184,115,51,0.35)] transition-all duration-300"
       >
-        {/* Radar Pulse Expanding Wave Ring */}
+        {/* Soft, Slow Ambient Radar Pulse Ring */}
         {!isOpen && (
           <motion.span
-            animate={{ scale: [1, 1.45], opacity: [0.55, 0] }}
-            transition={{ repeat: Infinity, duration: 2.2, ease: "easeOut" }}
+            animate={{ scale: [1, 1.28], opacity: [0.35, 0] }}
+            transition={{ repeat: Infinity, duration: 5.0, ease: "easeOut" }}
             className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-[#b87333] to-[#e5a93c] pointer-events-none"
           />
         )}
@@ -384,17 +382,21 @@ export function ChatBot() {
             <X size={24} />
           ) : (
             <motion.div
-              animate={{ rotate: [0, -14, 14, -8, 8, 0] }}
-              transition={{ repeat: Infinity, repeatDelay: 3.5, duration: 1.2 }}
+              animate={{ scale: [1, 1.08, 1] }}
+              transition={{ repeat: Infinity, duration: 4.0, ease: "easeInOut" }}
             >
               <MessageSquare size={24} />
             </motion.div>
           )}
         </div>
 
-        {/* Ambient Glow behind button */}
+        {/* Slow Smooth Breathing Glow behind button */}
         {!isOpen && (
-          <span className="absolute -inset-1 rounded-2xl bg-gradient-to-tr from-[#b87333] to-[#e5a93c] opacity-40 blur-md animate-pulse pointer-events-none group-hover:opacity-80 transition-opacity" />
+          <motion.span
+            animate={{ opacity: [0.2, 0.5, 0.2] }}
+            transition={{ repeat: Infinity, duration: 5.5, ease: "easeInOut" }}
+            className="absolute -inset-1 rounded-2xl bg-gradient-to-tr from-[#b87333] to-[#e5a93c] blur-md pointer-events-none group-hover:opacity-75 transition-opacity"
+          />
         )}
 
         {/* Unread Counter Badge */}
