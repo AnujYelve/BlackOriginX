@@ -82,7 +82,6 @@ const KNOWLEDGE_BASE = [
     reply:
       "We welcome institutional investors, strategic partners, and venture capital firms looking to back India's next-generation mobility ecosystem.\n\nYou can schedule an investor meeting online or send an email directly to **contact@blackoriginx.com**.",
     actions: [
-      { label: "Send Email (contact@blackoriginx.com)", href: "mailto:contact@blackoriginx.com?subject=Investor%20Meeting%20Schedule%20Request&body=Hello%20BlackOriginX%20Team%2C%0A%0AI%20would%20like%20to%20schedule%20an%20investor%20meeting.%0A%0ABest%20regards%2C", external: true },
       { label: "Schedule Investor Meeting", href: "/investors" },
       { label: "Partner Inquiry Form", href: "/contact" },
     ],
