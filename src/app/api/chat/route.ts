@@ -112,6 +112,36 @@ const KNOWLEDGE_BASE = [
     suggestions: ["Tell me about Torkk", "What is BlackOriginX?", "How to invest?"],
   },
   {
+    id: "privacy",
+    keywords: [
+      "privacy",
+      "policy",
+      "privacy policy",
+      "data privacy",
+      "data protection",
+      "data security",
+      "data retention",
+      "gdpr",
+      "grievance",
+      "nodal officer",
+      "location tracking",
+      "terms",
+      "legal"
+    ],
+    reply:
+      "🔒 **BlackOriginX & Torkk Privacy Summary**:\n\n" +
+      "• **Zero Data Monetization**: We NEVER sell, rent, or use your data for targeted ads.\n" +
+      "• **Data Collected**: Account info, Aadhaar/KYC (Captains), and OTP verification SMS.\n" +
+      "• **Location Privacy**: Captains tracked ONLY when 'On Duty'; Commuters during active trips.\n" +
+      "• **Security & 180-Day Retention**: TLS 1.3 / AES-256 encryption. Data retained max **180 days** post-deletion before full erasure.\n" +
+      "• **Contacts**: Grievance Officer: `nodalofficer@torkk.bike` | Support: `support@torkk.in`",
+    actions: [
+      { label: "Read Full Privacy Policy", href: "/privacy" },
+      { label: "Contact Grievance Officer", href: "mailto:nodalofficer@torkk.bike", external: true },
+    ],
+    suggestions: ["Tell me about Torkk", "What is BlackOriginX?", "Who is the founder?"],
+  },
+  {
     id: "career",
     keywords: ["career", "job", "hiring", "join", "work", "apply", "position"],
     reply:

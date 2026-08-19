@@ -64,6 +64,16 @@ export function ChatBot() {
   };
 
   useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isOpen) {
+        setIsOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen]);
+
+  useEffect(() => {
     if (isOpen) {
       scrollToBottom();
       setUnreadCount(0);
@@ -180,15 +190,23 @@ export function ChatBot() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.94, filter: "blur(6px)", transformOrigin: "bottom right" }}
+            initial={{ opacity: 0, y: 24, scale: 0.9, filter: "blur(8px)", transformOrigin: "bottom right" }}
             animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-            exit={{ opacity: 0, y: 16, scale: 0.94, filter: "blur(6px)" }}
-            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="chatbot-window pointer-events-auto w-[92vw] sm:w-[410px] h-[580px] max-h-[82vh] rounded-3xl flex flex-col overflow-hidden mb-4 relative shadow-2xl"
+            exit={{ opacity: 0, y: 18, scale: 0.92, filter: "blur(6px)" }}
+            transition={{ type: "spring", stiffness: 380, damping: 26 }}
+            className="chatbot-window pointer-events-auto w-[92vw] sm:w-[410px] h-[580px] max-h-[82vh] rounded-3xl flex flex-col overflow-hidden mb-4 relative shadow-[0_20px_60px_rgba(0,0,0,0.4)] border border-[#b87333]/20"
           >
-            {/* Ambient Background Glow */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-radial from-[#e5a93c]/10 to-transparent blur-3xl pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-radial from-[#b87333]/10 to-transparent blur-3xl pointer-events-none" />
+            {/* Ambient Background Glow Particles */}
+            <motion.div
+              animate={{ opacity: [0.15, 0.3, 0.15], scale: [0.9, 1.1, 0.9] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-0 right-0 w-72 h-72 bg-radial from-[#e5a93c]/20 to-transparent blur-3xl pointer-events-none"
+            />
+            <motion.div
+              animate={{ opacity: [0.1, 0.25, 0.1], scale: [1.1, 0.9, 1.1] }}
+              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              className="absolute bottom-0 left-0 w-72 h-72 bg-radial from-[#b87333]/20 to-transparent blur-3xl pointer-events-none"
+            />
 
             {/* Chat Header */}
             <div className="chatbot-header relative z-10 px-5 py-4 flex items-center justify-between">
@@ -210,16 +228,18 @@ export function ChatBot() {
                 <button
                   onClick={handleReset}
                   title="Clear Chat"
+                  aria-label="Clear Chat"
                   className="p-2 rounded-xl text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
                 >
                   <RotateCcw size={16} />
                 </button>
                 <button
                   onClick={() => setIsOpen(false)}
-                  title="Close Assistant"
-                  className="p-2 rounded-xl text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+                  title="Close Chat (Esc)"
+                  aria-label="Close Chat"
+                  className="p-2 rounded-xl text-gray-400 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-500/10 dark:hover:bg-red-500/20 transition-all duration-200"
                 >
-                  <ChevronDown size={18} />
+                  <X size={18} />
                 </button>
               </div>
             </div>
@@ -351,38 +371,68 @@ export function ChatBot() {
       </AnimatePresence>
 
       {/* Floating Action Button */}
-      <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={() => setIsOpen(!isOpen)}
-        className="pointer-events-auto relative group w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#b87333] to-[#e5a93c] p-[2px] shadow-[0_10px_30px_rgba(184,115,51,0.45)] transition-shadow duration-200"
+      <motion.div
+        animate={{ y: isOpen ? 0 : [0, -4, 0] }}
+        transition={{ repeat: Infinity, duration: 3.5, ease: "easeInOut" }}
+        className="relative pointer-events-auto"
       >
-        <div className="w-full h-full bg-[#18181b] group-hover:bg-[#141416] rounded-[14px] flex items-center justify-center text-[#e5a93c] group-hover:text-white transition-colors relative z-10 overflow-hidden">
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.div
-              key={isOpen ? "close" : "open"}
-              initial={{ rotate: isOpen ? -90 : 90, scale: 0.6, opacity: 0 }}
-              animate={{ rotate: 0, scale: 1, opacity: 1 }}
-              exit={{ rotate: isOpen ? 90 : -90, scale: 0.6, opacity: 0 }}
-              transition={{ duration: 0.18, ease: "easeOut" }}
-            >
-              {isOpen ? <X size={22} /> : <MessageSquare size={22} />}
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {/* Ambient Glow behind button */}
+        {/* Pulsing Outer Aura when closed */}
         {!isOpen && (
-          <span className="absolute -inset-1 rounded-2xl bg-gradient-to-tr from-[#b87333] to-[#e5a93c] opacity-30 blur-md pointer-events-none group-hover:opacity-60 transition-opacity" />
+          <motion.span
+            animate={{ scale: [1, 1.3, 1], opacity: [0.4, 0, 0.4] }}
+            transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" }}
+            className="absolute -inset-2 rounded-2xl bg-gradient-to-tr from-[#b87333] to-[#e5a93c] blur-lg pointer-events-none"
+          />
         )}
 
-        {/* Unread Counter Badge */}
-        {!isOpen && unreadCount > 0 && (
-          <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-red-500 text-white font-bold text-[10px] flex items-center justify-center border-2 border-[#18181b] shadow-md z-20">
-            {unreadCount}
-          </span>
-        )}
-      </motion.button>
+        <motion.button
+          whileHover={{ scale: 1.08 }}
+          whileTap={{ scale: 0.92 }}
+          onClick={() => setIsOpen(!isOpen)}
+          title={isOpen ? "Close Chat (Esc)" : "Open Chat Assistant"}
+          aria-label={isOpen ? "Close Chat Assistant" : "Open Chat Assistant"}
+          className="relative group w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#b87333] via-[#e5a93c] to-[#b87333] p-[2px] shadow-[0_10px_35px_rgba(184,115,51,0.45)] hover:shadow-[0_15px_40px_rgba(229,169,60,0.6)] transition-all duration-300"
+        >
+          <div className="w-full h-full bg-[#18181b] group-hover:bg-[#121214] rounded-[14px] flex items-center justify-center text-[#e5a93c] group-hover:text-white transition-colors relative z-10 overflow-hidden">
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={isOpen ? "close" : "open"}
+                initial={{ rotate: isOpen ? -120 : 120, scale: 0.4, opacity: 0 }}
+                animate={{ rotate: 0, scale: 1, opacity: 1 }}
+                exit={{ rotate: isOpen ? 120 : -120, scale: 0.4, opacity: 0 }}
+                transition={{ type: "spring", stiffness: 400, damping: 22 }}
+                className="flex items-center justify-center"
+              >
+                {isOpen ? (
+                  <X size={22} className="text-red-400 group-hover:text-red-300 group-hover:scale-110 transition-all duration-150" />
+                ) : (
+                  <MessageSquare size={22} className="text-[#e5a93c] group-hover:text-white group-hover:scale-110 transition-all duration-150" />
+                )}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Ambient Glow behind button */}
+          {!isOpen && (
+            <span className="absolute -inset-1 rounded-2xl bg-gradient-to-tr from-[#b87333] to-[#e5a93c] opacity-30 blur-md pointer-events-none group-hover:opacity-60 transition-opacity" />
+          )}
+
+          {/* Unread Counter Badge with Spring & Pulse */}
+          {!isOpen && unreadCount > 0 && (
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ type: "spring", stiffness: 500, damping: 15 }}
+              className="absolute -top-1.5 -right-1.5 z-20"
+            >
+              <span className="absolute inset-0 rounded-full bg-red-500 animate-ping opacity-75" />
+              <span className="relative w-5 h-5 rounded-full bg-gradient-to-r from-red-500 to-rose-600 text-white font-bold text-[10px] flex items-center justify-center border-2 border-[#18181b] shadow-lg">
+                {unreadCount}
+              </span>
+            </motion.div>
+          )}
+        </motion.button>
+      </motion.div>
     </div>
   );
 }

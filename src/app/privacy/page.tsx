@@ -3,10 +3,10 @@
 import { motion } from "framer-motion";
 import { Container } from "@/components/ui/Container";
 import Link from "next/link";
-import { ArrowLeft, Shield, Lock, Eye, FileText, CheckCircle2, Server, Key, Mail, Building2 } from "lucide-react";
+import { ArrowLeft, Shield, Lock, Eye, FileText, CheckCircle2, Server, Key, Mail, Building2, MapPin, Clock, UserCheck } from "lucide-react";
 
 export default function PrivacyPage() {
-  const lastUpdated = "July 22, 2026";
+  const lastUpdated = "July 20, 2026";
 
   return (
     <main className="min-h-screen bg-brand-black text-brand-white pt-28 pb-24 relative overflow-hidden">
@@ -38,11 +38,11 @@ export default function PrivacyPage() {
           <div className="flex flex-wrap items-center gap-4 text-xs text-brand-light-grey font-mono">
             <span>Last Updated: {lastUpdated}</span>
             <span>•</span>
-            <span>BlackOriginX Private Limited</span>
+            <span>BLACKORIGINX PRIVATE LIMITED (Torkk)</span>
           </div>
         </motion.div>
 
-        {/* Policy Content Cards (Styled for Light Theme) */}
+        {/* Policy Content Cards */}
         <div className="space-y-8">
           {/* Section 1: Overview */}
           <motion.section
@@ -56,17 +56,17 @@ export default function PrivacyPage() {
               <div className="w-10 h-10 rounded-xl bg-[#e5a93c]/15 border border-[#e5a93c]/40 flex items-center justify-center text-[#e5a93c] flex-shrink-0">
                 <Lock size={20} />
               </div>
-              1. Overview & Commitment
+              1. Overview & Scope
             </h2>
             <p className="text-neutral-600 text-sm sm:text-base leading-relaxed font-light mb-4">
-              BlackOriginX Private Limited (&quot;BlackOriginX&quot;, &quot;we&quot;, &quot;our&quot;, or &quot;us&quot;) operates as a technology company and venture builder. We prioritize data privacy and enforce rigorous administrative, physical, and technical safeguards across our platforms, including signature products like Torkk.
+              BLACKORIGINX PRIVATE LIMITED (&quot;Company&quot;, &quot;we&quot;, &quot;our&quot;, or &quot;Torkk&quot;) is committed to protecting your privacy. This Privacy Policy applies to the collection, processing, retrieval, disclosure, and protection of information across the Torkk Platform (`torkk.bike`, `torkk.rentals`, and Torkk mobile apps) and BlackOriginX websites.
             </p>
             <p className="text-neutral-600 text-sm sm:text-base leading-relaxed font-light">
-              This Privacy Policy details the policies governing the collection, processing, protection, and retention of user data when interacting with our corporate site or digital applications.
+              It governs interactions with commuters (Customers), independent drivers (Captains), and two-wheeler rental providers (Vendor Partners) under the Information Technology Act, 2000 and applicable Indian laws.
             </p>
           </motion.section>
 
-          {/* Section 2: Data Collection */}
+          {/* Section 2: Data We Collect */}
           <motion.section
             initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -82,9 +82,9 @@ export default function PrivacyPage() {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {[
-                { title: "Contact Submissions", desc: "Name, business email address, organization name, and partnership message details provided explicitly via forms.", icon: Mail },
-                { title: "Waitlist Access", desc: "Email address, country of residence, and product interest submitted for early access passes.", icon: Key },
-                { title: "Telemetry & Logs", desc: "IP address, device browser type, operational OS, and aggregated usage statistics.", icon: Server }
+                { title: "Account & Contacts", desc: "Name, email, mobile number, payment details, and form submissions.", icon: Mail },
+                { title: "KYC & Verification", desc: "For Captains & Vendors: Aadhaar, PAN, Driving License, RC, vehicle fitness/insurance certificates, and real-time selfies.", icon: UserCheck },
+                { title: "SMS & Telemetry", desc: "OTP verification SMS with permissions, IP addresses, device OS, browser logs, and call recordings for safety.", icon: Server }
               ].map((c, i) => (
                 <div key={i} className="p-5 rounded-2xl bg-[#fbfbfb] border border-black/5 flex flex-col justify-between">
                   <div>
@@ -97,7 +97,7 @@ export default function PrivacyPage() {
             </div>
           </motion.section>
 
-          {/* Section 3: Processing Operations */}
+          {/* Section 3: Location Privacy Policy */}
           <motion.section
             initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -105,28 +105,26 @@ export default function PrivacyPage() {
             transition={{ duration: 0.6 }}
             className="p-8 sm:p-10 rounded-[28px] bg-white border border-black/5 shadow-[0_15px_35px_rgba(0,0,0,0.05)] hover:border-[#e5a93c]/30 transition-all duration-300"
           >
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-neutral-900 mb-6 flex items-center gap-3.5 tracking-tight">
-              <div className="w-10 h-10 rounded-xl bg-[#3b82f6]/15 border border-[#3b82f6]/40 flex items-center justify-center text-[#60a5fa] flex-shrink-0">
-                <FileText size={20} />
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-neutral-900 mb-5 flex items-center gap-3.5 tracking-tight">
+              <div className="w-10 h-10 rounded-xl bg-[#e5a93c]/15 border border-[#e5a93c]/40 flex items-center justify-center text-[#e5a93c] flex-shrink-0">
+                <MapPin size={20} />
               </div>
-              3. Purpose of Processing
+              3. Precise Location Privacy
             </h2>
-            <div className="space-y-3">
-              {[
-                "Evaluating and processing strategic partnership, co-incubation, and institutional investment inquiries.",
-                "Delivering product availability updates and early access notifications for Torkk.",
-                "Maintaining platform security, mitigating cyber threats, and optimizing server response latency.",
-                "Fulfilling regulatory, legal, and corporate auditing obligations under applicable law."
-              ].map((text, i) => (
-                <div key={i} className="flex items-center gap-3 p-3.5 rounded-xl bg-[#fbfbfb] border border-black/5">
-                  <CheckCircle2 size={18} className="text-[#22c55e] flex-shrink-0" />
-                  <span className="text-sm text-neutral-600 font-light">{text}</span>
-                </div>
-              ))}
+            <div className="space-y-4 text-neutral-600 text-sm sm:text-base leading-relaxed font-light">
+              <p>
+                <strong>Drivers (Captains):</strong> Background and foreground location is collected <em>only</em> when the Captain switches status to &quot;On Duty&quot; or during an active trip, strictly to match nearby rides, provide navigation, and enable live commuter tracking. Background tracking automatically stops when switching to &quot;Off Duty&quot;.
+              </p>
+              <p>
+                <strong>Commuters (Customers):</strong> Location is accessed from ride request initiation until trip completion to determine pickup/drop locations and ensure passenger safety.
+              </p>
+              <p className="text-xs font-semibold text-neutral-800 bg-[#fbfbfb] p-3 rounded-xl border border-black/5">
+                🚫 Strict Promise: Location data is NEVER used for targeted advertising, marketing, profiling, or sold to third parties.
+              </p>
             </div>
           </motion.section>
 
-          {/* Section 4: Data Security & Non-Disclosure */}
+          {/* Section 4: Security, Monetization & Retention */}
           <motion.section
             initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -134,16 +132,24 @@ export default function PrivacyPage() {
             transition={{ duration: 0.6 }}
             className="p-8 sm:p-10 rounded-[28px] bg-white border border-black/5 shadow-[0_15px_35px_rgba(0,0,0,0.05)] hover:border-[#e5a93c]/30 transition-all duration-300"
           >
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-neutral-900 mb-5 tracking-tight">4. Data Security & Non-Disclosure</h2>
-            <p className="text-neutral-600 text-sm sm:text-base leading-relaxed font-light mb-4">
-              BlackOriginX strictly adheres to a zero data monetization policy. We do NOT sell, rent, or trade personal data to third-party advertisers or data brokers.
-            </p>
-            <p className="text-neutral-600 text-sm sm:text-base leading-relaxed font-light">
-              All transmitted data is encrypted using industry-standard TLS 1.3 / AES-256 protocols and stored on secure cloud infrastructure operating under strict access management.
-            </p>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-neutral-900 mb-5 tracking-tight">4. Security & Data Retention</h2>
+            <div className="space-y-3">
+              <div className="flex items-start gap-3 p-3.5 rounded-xl bg-[#fbfbfb] border border-black/5">
+                <CheckCircle2 size={18} className="text-[#22c55e] flex-shrink-0 mt-0.5" />
+                <span className="text-sm text-neutral-600 font-light"><strong>Zero Monetization:</strong> We never sell, rent, or trade your personal data to third-party advertisers.</span>
+              </div>
+              <div className="flex items-start gap-3 p-3.5 rounded-xl bg-[#fbfbfb] border border-black/5">
+                <Lock size={18} className="text-[#e5a93c] flex-shrink-0 mt-0.5" />
+                <span className="text-sm text-neutral-600 font-light"><strong>Encryption Standards:</strong> Data is protected using TLS 1.3 / AES-256 encryption protocols on secure servers.</span>
+              </div>
+              <div className="flex items-start gap-3 p-3.5 rounded-xl bg-[#fbfbfb] border border-black/5">
+                <Clock size={18} className="text-[#3b82f6] flex-shrink-0 mt-0.5" />
+                <span className="text-sm text-neutral-600 font-light"><strong>180-Day Post-Deletion Retention:</strong> Upon account cancellation, data is retained for up to <strong>180 days</strong> to satisfy legal obligations, prevent fraud, and resolve disputes, after which it is permanently deleted or anonymized.</span>
+              </div>
+            </div>
           </motion.section>
 
-          {/* Section 5: Data Protection Officer Contact */}
+          {/* Section 5: Grievance Officer & Contact */}
           <motion.section
             initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -155,17 +161,18 @@ export default function PrivacyPage() {
               <div>
                 <div className="flex items-center gap-2 mb-2">
                   <Building2 size={20} className="text-[#e5a93c]" />
-                  <span className="text-xs uppercase tracking-widest text-[#e5a93c] font-bold">Data Privacy Contact</span>
+                  <span className="text-xs uppercase tracking-widest text-[#e5a93c] font-bold">Grievance & Legal Officer</span>
                 </div>
-                <h3 className="text-xl font-bold text-neutral-900 mb-1">BlackOriginX Data Advisory Office</h3>
-                <p className="text-xs text-neutral-600 font-light">Headquarters: Gurugram, Haryana, INDIA</p>
+                <h3 className="text-xl font-bold text-neutral-900 mb-1">BLACKORIGINX Grievance Redressal</h3>
+                <p className="text-xs text-neutral-600 font-light mb-1">Official Email: `nodalofficer@torkk.bike`</p>
+                <p className="text-xs text-neutral-600 font-light">Support: `support@torkk.in` | Corporate: `contact@blackoriginx.com`</p>
               </div>
 
               <a
-                href="mailto:contact@blackoriginx.com"
+                href="mailto:nodalofficer@torkk.bike"
                 className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-gradient-to-r from-[#b87333] to-[#e5a93c] text-white font-bold text-xs uppercase tracking-wider shadow-lg hover:shadow-xl transition-all"
               >
-                <Mail size={16} /> Contact Privacy Desk
+                <Mail size={16} /> Contact Grievance Officer
               </a>
             </div>
           </motion.section>
@@ -174,3 +181,4 @@ export default function PrivacyPage() {
     </main>
   );
 }
+
