@@ -180,10 +180,10 @@ export function ChatBot() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 30, scale: 0.9, transformOrigin: "bottom right" }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 25, scale: 0.9 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ opacity: 0, y: 20, scale: 0.94, filter: "blur(6px)", transformOrigin: "bottom right" }}
+            animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+            exit={{ opacity: 0, y: 16, scale: 0.94, filter: "blur(6px)" }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="chatbot-window pointer-events-auto w-[92vw] sm:w-[410px] h-[580px] max-h-[82vh] rounded-3xl flex flex-col overflow-hidden mb-4 relative shadow-2xl"
           >
             {/* Ambient Background Glow */}
@@ -231,9 +231,9 @@ export function ChatBot() {
                 return (
                   <motion.div
                     key={msg.id}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.25 }}
+                    initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ duration: 0.18, ease: "easeOut" }}
                     className={`flex gap-3 ${isAssistant ? "justify-start" : "justify-end"}`}
                   >
                     {isAssistant && (
@@ -278,13 +278,15 @@ export function ChatBot() {
                       {isAssistant && msg.suggestions && msg.suggestions.length > 0 && (
                         <div className="mt-2 flex flex-wrap gap-1.5">
                           {msg.suggestions.map((sug, i) => (
-                            <button
+                            <motion.button
                               key={i}
+                              whileHover={{ scale: 1.03 }}
+                              whileTap={{ scale: 0.97 }}
                               onClick={() => handleSend(sug)}
-                              className="chatbot-chip text-[11px] px-2.5 py-1 rounded-full font-medium transition-all duration-200 text-left"
+                              className="chatbot-chip text-[11px] px-2.5 py-1 rounded-full font-medium transition-all duration-150 text-left"
                             >
                               {sug}
-                            </button>
+                            </motion.button>
                           ))}
                         </div>
                       )}
@@ -301,14 +303,14 @@ export function ChatBot() {
 
               {/* Typing Indicator */}
               {isLoading && (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex gap-3 items-center">
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.15 }} className="flex gap-3 items-center">
                   <div className="w-7 h-7 rounded-xl bg-[#b87333]/20 border border-[#b87333]/40 flex items-center justify-center text-[#e5a93c] flex-shrink-0">
                     <Bot size={15} />
                   </div>
                   <div className="chatbot-msg-bot px-4 py-3 rounded-2xl rounded-tl-sm flex items-center gap-1.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#e5a93c] animate-bounce" />
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#e5a93c] animate-bounce [animation-delay:0.2s]" />
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#e5a93c] animate-bounce [animation-delay:0.4s]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#e5a93c] animate-bounce [animation-delay:0.15s]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#e5a93c] animate-bounce [animation-delay:0.3s]" />
                   </div>
                 </motion.div>
               )}
@@ -333,72 +335,50 @@ export function ChatBot() {
                   placeholder="Ask a question about BlackOriginX or Torkk..."
                   className="chatbot-input-field flex-1 bg-transparent text-xs md:text-sm focus:outline-none py-2 px-1"
                 />
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.08 }}
+                  whileTap={{ scale: 0.94 }}
                   type="submit"
                   disabled={!input.trim() || isLoading}
-                  className="w-8 h-8 rounded-xl bg-gradient-to-r from-[#b87333] to-[#e5a93c] disabled:opacity-40 disabled:pointer-events-none flex items-center justify-center text-white shadow-md transition-all hover:scale-105"
+                  className="w-8 h-8 rounded-xl bg-gradient-to-r from-[#b87333] to-[#e5a93c] disabled:opacity-40 disabled:pointer-events-none flex items-center justify-center text-white shadow-md transition-all"
                 >
                   <Send size={14} />
-                </button>
+                </motion.button>
               </form>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Floating Action Button with Smooth Bobbing Motion */}
+      {/* Floating Action Button */}
       <motion.button
-        animate={
-          isOpen
-            ? { y: 0, rotate: 0 }
-            : {
-              y: [0, -8, 0],
-              rotate: [0, -2, 2, 0],
-            }
-        }
-        transition={
-          isOpen
-            ? { duration: 0.2 }
-            : {
-              y: { repeat: Infinity, duration: 3, ease: "easeInOut" },
-              rotate: { repeat: Infinity, duration: 4, ease: "easeInOut" },
-            }
-        }
-        whileHover={{ scale: 1.1, y: -2 }}
-        whileTap={{ scale: 0.92 }}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="pointer-events-auto relative group w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#b87333] to-[#e5a93c] p-[2px] shadow-[0_10px_30px_rgba(184,115,51,0.45)] transition-all duration-300"
+        className="pointer-events-auto relative group w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#b87333] to-[#e5a93c] p-[2px] shadow-[0_10px_30px_rgba(184,115,51,0.45)] transition-shadow duration-200"
       >
-        {/* Radar Pulse Expanding Wave Ring */}
-        {!isOpen && (
-          <motion.span
-            animate={{ scale: [1, 1.45], opacity: [0.55, 0] }}
-            transition={{ repeat: Infinity, duration: 2.2, ease: "easeOut" }}
-            className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-[#b87333] to-[#e5a93c] pointer-events-none"
-          />
-        )}
-
-        <div className="w-full h-full bg-[#18181b] group-hover:bg-[#141416] rounded-[14px] flex items-center justify-center text-[#e5a93c] group-hover:text-white transition-colors relative z-10">
-          {isOpen ? (
-            <X size={24} />
-          ) : (
+        <div className="w-full h-full bg-[#18181b] group-hover:bg-[#141416] rounded-[14px] flex items-center justify-center text-[#e5a93c] group-hover:text-white transition-colors relative z-10 overflow-hidden">
+          <AnimatePresence mode="wait" initial={false}>
             <motion.div
-              animate={{ rotate: [0, -14, 14, -8, 8, 0] }}
-              transition={{ repeat: Infinity, repeatDelay: 3.5, duration: 1.2 }}
+              key={isOpen ? "close" : "open"}
+              initial={{ rotate: isOpen ? -90 : 90, scale: 0.6, opacity: 0 }}
+              animate={{ rotate: 0, scale: 1, opacity: 1 }}
+              exit={{ rotate: isOpen ? 90 : -90, scale: 0.6, opacity: 0 }}
+              transition={{ duration: 0.18, ease: "easeOut" }}
             >
-              <MessageSquare size={24} />
+              {isOpen ? <X size={22} /> : <MessageSquare size={22} />}
             </motion.div>
-          )}
+          </AnimatePresence>
         </div>
 
         {/* Ambient Glow behind button */}
         {!isOpen && (
-          <span className="absolute -inset-1 rounded-2xl bg-gradient-to-tr from-[#b87333] to-[#e5a93c] opacity-40 blur-md animate-pulse pointer-events-none group-hover:opacity-80 transition-opacity" />
+          <span className="absolute -inset-1 rounded-2xl bg-gradient-to-tr from-[#b87333] to-[#e5a93c] opacity-30 blur-md pointer-events-none group-hover:opacity-60 transition-opacity" />
         )}
 
         {/* Unread Counter Badge */}
         {!isOpen && unreadCount > 0 && (
-          <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-red-500 text-white font-bold text-[10px] flex items-center justify-center border-2 border-[#18181b] shadow-md animate-bounce z-20">
+          <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-red-500 text-white font-bold text-[10px] flex items-center justify-center border-2 border-[#18181b] shadow-md z-20">
             {unreadCount}
           </span>
         )}
