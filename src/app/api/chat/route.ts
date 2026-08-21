@@ -25,6 +25,21 @@ interface ChatResponseData {
 // Knowledge Base Topics & Intent Matcher
 const KNOWLEDGE_BASE = [
   {
+    id: "torkk_commission",
+    keywords: ["0% commission", "zero commission", "commission", "driver earnings", "subscription", "plans"],
+    reply:
+      "**0% Commission Model for Torkk Drivers**:\n\n" +
+      "• **Keep 100% Earnings**: Unlike traditional ride-hailing aggregators taking 25-30% cuts, Torkk charges **0% commission** on trip fares.\n" +
+      "• **Flat Daily/Monthly Subscriptions**: Torkk Captains pay a small, transparent subscription fee to access the platform.\n" +
+      "• **Upfront Fare Calculation**: Riders pay upfront, transparent fares with zero hidden charges or unpredictable surge surges.\n" +
+      "• **Direct Driver Payouts**: Daily auto-settlement directly to driver bank accounts.",
+    actions: [
+      { label: "Visit Torkk.in", href: "https://torkk.in/", external: true },
+      { label: "Torkk Captain Details", href: "/brands/torkk" },
+    ],
+    suggestions: ["Tell me about Torkk", "What is BlackOriginX?", "Who is the founder?"],
+  },
+  {
     id: "torkk",
     keywords: [
       "torkk",
@@ -33,21 +48,25 @@ const KNOWLEDGE_BASE = [
       "torkk ride",
       "torkk app",
       "torkk captain",
-      "zero commission",
-      "0% commission",
       "fair rides",
       "ride booking",
       "cab",
       "taxi",
       "driver app",
-      "driver earnings",
       "aadhaar verified",
       "emergency sos",
       "live tracking",
       "surge pricing",
     ],
     reply:
-      "**Torkk** (*Fairer Rides. Safer Journeys.*) is BlackOriginX's flagship smart urban mobility ecosystem!\n\n🌐 **Official Website**: [https://torkk.in/](https://torkk.in/)\n\n✨ **Key Highlights of Torkk**:\n• **0% Commission for Drivers**: Drivers keep 100% of their trip earnings through transparent, flexible subscription plans.\n• **Verified Drivers**: 100% background-checked & Aadhaar-verified driver partners (*Torkk Captains*).\n• **Transparent Upfront Fares**: Zero surge price manipulation and upfront fair pricing for commuters.\n• **Safety-First Architecture**: Live GPS trip tracking, biometric safety check-ins, and 1-tap Emergency SOS linked directly to police control rooms and Torkk rapid dispatch teams.\n• **AI Smart Matching**: Intelligent algorithm for lightning-fast nearby driver pairing.\n• **Rider & Driver Apps**: Available on Google Play & Apple App Store.\n\n📧 **Support Contact**: `support@torkk.in`",
+      "**Torkk** (*Fairer Rides. Safer Journeys.*) is BlackOriginX's flagship smart urban mobility ecosystem!\n\n🌐 **Official Website**: [https://torkk.in/](https://torkk.in/)\n\n✨ **Key Highlights of Torkk**:\n" +
+      "• **0% Commission for Drivers**: Drivers keep 100% of their trip earnings through transparent, flexible subscription plans.\n" +
+      "• **Verified Drivers**: 100% background-checked & Aadhaar-verified driver partners (*Torkk Captains*).\n" +
+      "• **Transparent Upfront Fares**: Zero surge price manipulation and upfront fair pricing for commuters.\n" +
+      "• **Safety-First Architecture**: Live GPS trip tracking, biometric safety check-ins, and 1-tap Emergency SOS linked directly to police control rooms and Torkk rapid dispatch teams.\n" +
+      "• **AI Smart Matching**: Intelligent algorithm for lightning-fast nearby driver pairing.\n" +
+      "• **Rider & Driver Apps**: Available on Google Play & Apple App Store.\n\n" +
+      "📧 **Support Contact**: `support@torkk.in`",
     actions: [
       { label: "Visit Torkk.in", href: "https://torkk.in/", external: true },
       { label: "Explore Torkk Brand Page", href: "/brands/torkk" },
@@ -66,9 +85,11 @@ const KNOWLEDGE_BASE = [
       "about blackoriginx",
       "overview",
       "what do you do",
+      "company",
     ],
     reply:
-      "**BlackOriginX** is a technology-first holding company headquartered in Gurugram, Haryana. We build, incubate, and scale next-generation ventures across smart electric mobility, AI logistics, and sustainable infrastructure.\n\nOur flagship venture is **Torkk** ([torkk.in](https://torkk.in/)) — a zero-commission, safety-first ride booking platform built for drivers and commuters across India.",
+      "**BlackOriginX** is a technology-first holding company headquartered in Gurugram, Haryana. We build, incubate, and scale next-generation ventures across smart electric mobility, AI logistics, and sustainable infrastructure.\n\n" +
+      "Our flagship venture is **Torkk** ([torkk.in](https://torkk.in/)) — a zero-commission, safety-first ride booking platform built for drivers and commuters across India.",
     actions: [
       { label: "Learn About Us", href: "/about" },
       { label: "Explore Our Brands", href: "/brands" },
@@ -78,9 +99,10 @@ const KNOWLEDGE_BASE = [
   },
   {
     id: "investor",
-    keywords: ["invest", "investor", "fund", "equity", "partner", "partnership", "pitch", "capital", "meeting", "schedule"],
+    keywords: ["invest", "investor", "fund", "equity", "partner", "partnership", "pitch", "capital", "meeting", "schedule", "valuation", "investment"],
     reply:
-      "We welcome institutional investors, strategic partners, and venture capital firms looking to back India's next-generation mobility ecosystem.\n\nYou can schedule an investor meeting online or send an email directly to **contact@blackoriginx.com**.",
+      "We welcome institutional investors, strategic partners, and venture capital firms looking to back India's next-generation mobility ecosystem.\n\n" +
+      "You can schedule an investor meeting online or send an email directly to **contact@blackoriginx.com**.",
     actions: [
       { label: "Schedule Investor Meeting", href: "/investors" },
       { label: "Partner Inquiry Form", href: "/contact" },
@@ -89,17 +111,22 @@ const KNOWLEDGE_BASE = [
   },
   {
     id: "founder",
-    keywords: ["founder", "ceo", "leadership", "team", "shivasheesh", "owner", "management"],
+    keywords: ["founder", "ceo", "leadership", "team", "shivasheesh", "owner", "management", "who started"],
     reply:
-      "BlackOriginX was founded by **Shivasheesh Kumar**, a visionary entrepreneur dedicated to building scalable technology platforms and transforming urban mobility across India.\n\nUnder his leadership, BlackOriginX incubates disruptive ventures like **Torkk** ([torkk.in](https://torkk.in/)) with a focus on engineering excellence, zero commission driver empowerment, and long-term sustainability.",
+      "BlackOriginX was founded by **Shivasheesh Kumar**, a visionary entrepreneur dedicated to building scalable technology platforms and transforming urban mobility across India.\n\n" +
+      "Under his leadership, BlackOriginX incubates disruptive ventures like **Torkk** ([torkk.in](https://torkk.in/)) with a focus on engineering excellence, zero commission driver empowerment, and long-term sustainability.",
     actions: [{ label: "Read Our Story", href: "/about" }],
     suggestions: ["What is BlackOriginX?", "Tell me about Torkk", "Contact Us"],
   },
   {
     id: "contact",
-    keywords: ["contact", "email", "address", "location", "phone", "reach", "office", "gurugram", "haryana"],
+    keywords: ["contact", "email", "address", "location", "phone", "reach", "office", "gurugram", "haryana", "map", "where"],
     reply:
-      "📍 **Headquarters**: Gurugram, Haryana, India\n✉️ **Primary Email**: contact@blackoriginx.com\n🚗 **Torkk Support**: support@torkk.in ([torkk.in](https://torkk.in/))\n💼 **LinkedIn**: [BlackOriginX Showcase](https://www.linkedin.com/showcase/blackoriginx/)\n\nYou can also drop us a direct message using our interactive contact form!",
+      "📍 **Headquarters**: Gurugram, Haryana, India\n" +
+      "✉️ **Primary Email**: `contact@blackoriginx.com`\n" +
+      "🚗 **Torkk Support**: `support@torkk.in` ([torkk.in](https://torkk.in/))\n" +
+      "💼 **LinkedIn**: [BlackOriginX Showcase](https://www.linkedin.com/showcase/blackoriginx/)\n\n" +
+      "You can also drop us a direct message using our interactive contact form!",
     actions: [{ label: "Open Contact Form", href: "/contact" }],
     suggestions: ["Schedule Investor Meeting", "Tell me about Torkk", "What is BlackOriginX?"],
   },
@@ -126,7 +153,7 @@ const KNOWLEDGE_BASE = [
       "nodal officer",
       "location tracking",
       "terms",
-      "legal"
+      "legal",
     ],
     reply:
       "🔒 **BlackOriginX & Torkk Privacy Summary**:\n\n" +
@@ -143,9 +170,10 @@ const KNOWLEDGE_BASE = [
   },
   {
     id: "career",
-    keywords: ["career", "job", "hiring", "join", "work", "apply", "position"],
+    keywords: ["career", "job", "hiring", "join", "work", "apply", "position", "vacancy", "openings"],
     reply:
-      "We are always looking for passionate engineers, designers, product managers, and problem solvers to join our team in building the future of mobility!\n\nSend your resume and portfolio directly to `contact@blackoriginx.com` or reach out via our contact page.",
+      "We are always looking for passionate engineers, designers, product managers, and problem solvers to join our team in building the future of mobility!\n\n" +
+      "Send your resume and portfolio directly to `contact@blackoriginx.com` or reach out via our contact page.",
     actions: [{ label: "Get in Touch", href: "/contact" }],
     suggestions: ["What is BlackOriginX?", "Who is the founder?", "Tell me about Torkk"],
   },
@@ -163,12 +191,24 @@ export async function POST(req: Request) {
       });
     }
 
-    // Match query against knowledge base
-    let matchedItem = KNOWLEDGE_BASE.find((item) =>
-      item.keywords.some((keyword) => message.includes(keyword))
-    );
+    // Match query against knowledge base with scoring for best match
+    let bestMatch: (typeof KNOWLEDGE_BASE)[0] | null = null;
+    let highestScore = 0;
 
-    if (!matchedItem) {
+    for (const item of KNOWLEDGE_BASE) {
+      let score = 0;
+      for (const keyword of item.keywords) {
+        if (message.includes(keyword)) {
+          score += keyword.length; // Higher weight for longer matching keywords
+        }
+      }
+      if (score > highestScore) {
+        highestScore = score;
+        bestMatch = item;
+      }
+    }
+
+    if (!bestMatch || highestScore === 0) {
       // Default intelligent fallback response
       return NextResponse.json<ChatResponseData>({
         reply:
@@ -184,9 +224,9 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json<ChatResponseData>({
-      reply: matchedItem.reply,
-      actions: matchedItem.actions,
-      suggestions: matchedItem.suggestions,
+      reply: bestMatch.reply,
+      actions: bestMatch.actions,
+      suggestions: bestMatch.suggestions,
     });
   } catch (error) {
     console.error("Chat API error:", error);
